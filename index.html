@@ -22,59 +22,71 @@
     </style>
 
     <script>
-        // Getting canvas element
+        // en - Getting canvas element
+        // pt - Pegando o elemento do Canvas
         const c = document.getElementById("matrix");
 
-        // Defining it's context
+        // en - Defining it's context
+        // pt - Definindo o seu contexto
         const ctx = c.getContext("2d");
 
-        // Defining the canvas with max screen size
+        // en - Defining the canvas with max screen size
+        // pt - definindo o canvas com tamanho máximo da tela
         c.height = window.innerHeight;
         c.width = window.innerWidth;
 
-        // Matrix Rain Letters
-        // View more: https://bit.ly/3yFJoU3
+        // en - Matrix Rain Letters | View more: https://bit.ly/3yFJoU3
+        // pt - letras do Matrix Rain | Ver mais: : https://bit.ly/3yFJoU3
         const letters = ["日","ﾊ","ﾐ","ﾋ","ｰ","ｳ","ｼ","ﾅ","ﾓ","ﾆ","ｻ","ﾜ","ﾂ","ｵ","ﾘ","ｱ","ﾎ","ﾃ","ﾏ","ｹ","ﾒ","ｴ","ｶ","ｷ","ﾑ","ﾕ","ﾗ","ｾ","ﾈ","ｽ","ﾀ","ﾇ","ﾍ",":","・",".","=","*","+","-","<",">","¦","｜","ﾘ"];
 
         const fontSize = 18;
 
-        // Defining how many columns are necessary according to screen and font size
+        // en - Defining how many columns are necessary according to screen and font size
+        // pt - definindo quantas colunas serão necessárias pelo tamanho da tela e fonte
         const columns = c.width / fontSize;
 
-        // Creating an array for each drop, aways starting on position y=1
+        // en - Creating an array for each drop, aways starting on position y=1
+        // pt - criando um array para cada gota, sempre iniciando na posição do y=1
         const drops = new Array(Math.floor(columns)).fill(1);
 
         function draw() {
-        // Filling all the screen in black with opacity
-        // This opacity trick will be helpfull for the letters slowly disappearing effect
+        // en - Filling all the screen in black with opacity | This opacity trick will be helpfull for the letters slowly disappearing effect
+        // pt - preenchendo a tela toda de preto com opacidade | esse truque da opacidade será útil para o efeito das letras sumindo aos poucos
         ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
         ctx.fillRect(0, 0, c.width, c.height);
 
-        // Defining color and font style
+        // en - Defining color and font style
+        // pt - definindo a cor e estilo da fonte
         ctx.fillStyle = "#0F0";
         ctx.font = `${fontSize}px arial`;
 
         for (let i = 0; i < drops.length; i++) {
-            // Getting a random letter from our array 
+            // en - Getting a random letter from our array
+            // pt - pegando uma letra randomicamente no nosso array
             const text = letters[Math.floor(Math.random() * letters.length)];
 
-            // Writing on the screen
+            // en - Writing on the screen
+            // pt - escrevendo na tela
             ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-            // Resetting the drop position when it gets to the end 
+            // en - Resetting the drop position when it gets to the end
+            // pt - resetando a posição da gota ao chegar no fim 
             if (drops[i] * fontSize > c.height && Math.random() > 0.95) {
             drops[i] = 0;
             }
 
-            // Moving the drops on the y axis 
+            // en - Moving the drops on the y axis
+            // pt - movendo as gotas no eixo y
             drops[i]++;
         }
 
-        //  Recursive call to animate frame by frame
+        //  en - Recursive call to animate frame by frame
+        // pt - chamada recursiva para animar quadro a quadro
         window.requestAnimationFrame(draw);
         }
 
-        // Calling the created function
+        // en - Calling the created function
+        // pt - chamando a função criada
         draw()
     </script>
     
