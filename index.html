@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Rain</title>
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+      
+        canvas {
+          display: block;
+        }
+    </style>
+
+    <script>
+        // Getting canvas element
+        const c = document.getElementById("matrix");
+
+        // Defining it's context
+        const ctx = c.getContext("2d");
+
+        // Defining the canvas with max screen size
+        c.height = window.innerHeight;
+        c.width = window.innerWidth;
+
+        // Matrix Rain Letters
+        // View more: https://bit.ly/3yFJoU3
+        const letters = ["日","ﾊ","ﾐ","ﾋ","ｰ","ｳ","ｼ","ﾅ","ﾓ","ﾆ","ｻ","ﾜ","ﾂ","ｵ","ﾘ","ｱ","ﾎ","ﾃ","ﾏ","ｹ","ﾒ","ｴ","ｶ","ｷ","ﾑ","ﾕ","ﾗ","ｾ","ﾈ","ｽ","ﾀ","ﾇ","ﾍ",":","・",".","=","*","+","-","<",">","¦","｜","ﾘ"];
+
+        const fontSize = 18;
+
+        // Defining how many columns are necessary according to screen and font size
+        const columns = c.width / fontSize;
+
+        // Creating an array for each drop, aways starting on position y=1
+        const drops = new Array(Math.floor(columns)).fill(1);
+
+        function draw() {
+        // Filling all the screen in black with opacity
+        // This opacity trick will be helpfull for the letters slowly disappearing effect
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, c.width, c.height);
+
+        // Defining color and font style
+        ctx.fillStyle = "#0F0";
+        ctx.font = `${fontSize}px arial`;
+
+        for (let i = 0; i < drops.length; i++) {
+            // Getting a random letter from our array 
+            const text = letters[Math.floor(Math.random() * letters.length)];
+
+            // Writing on the screen
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            // Resetting the drop position when it gets to the end 
+            if (drops[i] * fontSize > c.height && Math.random() > 0.95) {
+            drops[i] = 0;
+            }
+
+            // Moving the drops on the y axis 
+            drops[i]++;
+        }
+
+        //  Recursive call to animate frame by frame
+        window.requestAnimationFrame(draw);
+        }
+
+        // Calling the created function
+        draw()
+    </script>
+    
+</body>
+</html>
